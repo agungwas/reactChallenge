@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import Login from './components/Login'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Home from './components/Home'
-import NewsSummary from './components/NewsSummary'
+import { Provider } from 'react-redux'
+import store from './store'
 import { Switch, Route, Redirect, useHistory } from 'react-router-dom'
 
 export default function App (props) {
@@ -21,26 +22,22 @@ export default function App (props) {
     setLogin(false)
   }
 
-  // useEffect(_=> {
-  //   history.push('/home')
-  // }, [])
-
-  // if (!login) return <Login login={logining}></Login>
-  // else return (<Home logout={logout}/>)
   return (
-    <Switch>
-      <Route path="/login">
-        {login === true ? 
-        <Redirect to="/"/> :
-        <Login login={logining} />
+    <Provider store={store}>
+      <Switch>
+        <Route path="/login">
+          {login === true ? 
+          <Redirect to="/"/> :
+          <Login login={logining} />
         }
-      </Route>
-      <Route path="/">
-        {login === false ? 
-        <Redirect to="/login"/> :
-        <Home logout={logout}/>
+        </Route>
+        <Route path="/">
+          {login === false ? 
+          <Redirect to="/login"/> :
+          <Home logout={logout}/>
         }
-      </Route>
-    </Switch>
+        </Route>
+      </Switch>
+    </Provider>
   )
 }
