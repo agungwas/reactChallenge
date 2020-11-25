@@ -1,7 +1,9 @@
 import React from 'react'
+import { Link, useRouteMatch } from 'react-router-dom'
 
 export default function Card (props) {
   const { data, deleteNews } = props
+  const { path, url } = useRouteMatch()
   
   return (
     <React.Fragment>
@@ -9,14 +11,11 @@ export default function Card (props) {
         <div className="card shadow rounded">
           <img src={data.imageUrl} alt="" className="card-img-top"/>
           <div className="card-title">
-            <p className="h5 font-weight-bold mt-2" style={{ textAlign: 'center' }}>{data.title} </p>
-          </div>
-          <div className="card-body">
-            <p className="">{data.summary} </p>
+            <p className=" font-weight-bold mt-2" style={{ textAlign: 'center' }}>{data.title} </p>
           </div>
           <div className="card-footer justify-content-between row no-gutters">
-            <a target="#" href={data.url}><button className="btn btn-info">view more</button></a>
             <button className="btn btn-danger" onClick={_=> deleteNews(data.id)}>Delete</button>
+            <Link to={`/${data.id}`}><button className="btn btn-info">Detail</button></Link>
           </div>
         </div>
       </div>

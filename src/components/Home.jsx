@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
+import { Route, Switch } from 'react-router-dom'
 import NewsCard from './NewsCard'
+import NewsSummary from './NewsSummary'
 
 export default function Home (props) {
   const [news, setNews] = useState([])
@@ -10,7 +12,6 @@ export default function Home (props) {
       .then(data => data.json())
       .then(news => {
         setNews(news)
-        console.log(news);
       })
       .catch(response => {
         console.log(response, 'dari error'); 
@@ -32,11 +33,19 @@ export default function Home (props) {
       <div className="w-100 row no-gutters justify-content-center">
         <h1 className="display-4 font-weight-bold">News</h1>
       </div>
-      <div className="row row-cols-1 row-cols-md-4 p-2 no-gutters bg-secondary">
-        {news.map(el => (
-          <NewsCard data={el} deleteNews={deleteNews} key={el.id}/>
-        ))}
-      </div>
+      <Switch>
+          <Route path="/:id">
+            <NewsSummary></NewsSummary>
+          </Route>
+          <Route path="/">
+            <div className="row row-cols-1 row-cols-md-4 p-2 no-gutters bg-secondary">
+              {news.map(el => (
+                <NewsCard data={el} deleteNews={deleteNews} key={el.id}/>
+              ))}
+            </div>
+          </Route>
+
+      </Switch>
       
     </React.Fragment>
   )
