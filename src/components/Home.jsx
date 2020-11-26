@@ -1,26 +1,31 @@
-import React from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Route, Switch, Link, useLocation } from 'react-router-dom'
 import Favourites from './Favourites'
 import NewsCard from './NewsCard'
 import NewsSummary from './NewsSummary'
-import fetching from '../helpers/fetchNews'
+import {fetching} from '../store'
 import Loading from './Loading'
+import Error from './Error'
 import del from '../store/actions/delete'
 
 export default function Home (props) {
-  const [news, loading, setNews] = fetching('https://test.spaceflightnewsapi.net/api/v2/articles', [])
+  const { news, loading, error } = useSelector(state => state)
   const { logout } = props
   const dispatch = useDispatch()
   const location = useLocation()
 
+  useEffect(_=> {
+    dispatch(fetching())
+  }, [])
+
   const deleteNews = (id, e) => {
     e.preventDefault()
-    const newNews = news.filter(el => el.id !== id)
     dispatch(del({id}))
-    setNews(newNews)
   }
-  if (loading === true) return <Loading></Loading>
+
+  if (loading) return <Loading></Loading>
+  if (error) return <Error/>
   return (
   <React.Fragment>
     <div className="position-fixed w-auto row bg-success shadow rounded p-1 px-2" style={{ top: '1em', right: '1em', zIndex: '100'}}>

@@ -9,7 +9,7 @@ export default function Favourites (props) {
 
   const deleteNews = (id, e) => {
     e.preventDefault()
-    dispatch({type: 'delete', id})
+    dispatch({type: 'DELETE FAV', id})
   }
 
   if (favourites.length === 0) {
