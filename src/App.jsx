@@ -23,21 +23,23 @@ export default function App (props) {
   }
 
   return (
-    <Provider store={store}>
-      <Switch>
-        <Route path="/login">
-          {login === true ? 
-          <Redirect to="/"/> :
-          <Login login={logining} />
-        }
-        </Route>
-        <Route path="/">
-          {login === false ? 
-          <Redirect to="/login"/> :
-          <Home logout={logout}/>
-        }
-        </Route>
-      </Switch>
-    </Provider>
+    <React.StrictMode>
+      <Provider store={store}>
+        <Switch>
+          <Route path="/login">
+            {login === true ? 
+            <Redirect to="/"/> :
+            <Login login={logining} />
+          }
+          </Route>
+          <Route path="/">
+            {login === false ? 
+            <Redirect to="/login"/> :
+            <Home logout={logout}/>
+          }
+          </Route>
+        </Switch>
+      </Provider>
+    </React.StrictMode>
   )
 }

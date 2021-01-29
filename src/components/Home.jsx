@@ -24,8 +24,6 @@ export default function Home (props) {
     dispatch(del({id}))
   }
 
-  if (loading) return <Loading></Loading>
-  if (error) return <Error/>
   return (
   <React.Fragment>
     <div className="position-fixed w-auto row bg-success shadow rounded p-1 px-2" style={{ top: '1em', right: '1em', zIndex: '100'}}>
@@ -45,7 +43,7 @@ export default function Home (props) {
 
     <div className="w-100 row no-gutters justify-content-center">
       <Link to='/' className='text-decoration-none' style={{}}>
-        <h1 className="display-4 font-weight-bold text-dark">News</h1>
+        <h1 className="display-4 font-weight-bold text-dark">Spaceflight News</h1>
       </Link>
     </div>
     <div className="ml-2 row no-gutters mb-1">
@@ -55,7 +53,7 @@ export default function Home (props) {
       <p className="text-muted small">&gt;</p>
       <p className="text-muted small">{location.pathname.slice(1)} </p>
     </div>
-    <Switch>
+    {(!loading && !error ) && <Switch>
         <Route path='/favourites'>
           <Favourites></Favourites>
         </Route>
@@ -69,8 +67,10 @@ export default function Home (props) {
             ))}
           </div>
         </Route>
-    </Switch>
-    
+    </Switch>}
+    {loading && <Loading />}
+    {error && <Error />}
+
   </React.Fragment>
   )
 
